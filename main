@@ -31,8 +31,6 @@ for index, row in df.iterrows():
     averages = average_of_each.loc[trip_imei]
     averages_per_trip = averages_per_trip.append(averages, ignore_index= True)
 
-
-
 averages_per_trip.columns=['avg_smooth','avg_turning', 'avg_duration']
 
 df = df.reset_index(drop=True)
