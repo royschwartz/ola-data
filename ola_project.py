@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv(r"../input/olaresults.txt", sep='\t', header=(0), low_memory=False)
+df = pd.read_csv(r"..olaresults.txt", sep='\t', header=(0), low_memory=False)
 
 #create trip duration
 
