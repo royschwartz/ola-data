@@ -13,15 +13,14 @@ df['trip_duration'] = (df.end - df.start) / np.timedelta64(1, 's') / 60
 
 df = df[['IMEI', 'OLA_COMMENTS', 'trip_duration', 'Smooth_Driving_Score', 'Turning_Score']]
 
-
 #drop all rows where IMEI is nan - I see we did not record scores for these so they are irrelevant to the project
 df = df[pd.notnull(df['IMEI'])]
+
 
 #creating a separate df with averages for each driver (based on IMEI id), to give more features to work with
 
 #get average score for each imei number
 average_of_each = df.groupby('IMEI').agg(np.mean)
-
 
 #create separate df to feed information into
 averages_per_trip = pd.DataFrame(columns= ['Smooth_Driving_Score', 'Turning_Score', 'trip_duration'])
@@ -38,6 +37,7 @@ averages_per_trip = averages_per_trip.reset_index(drop=True)
 
 #merge dataframes
 df[['avg_smooth','avg_turning', 'avg_duration']]=averages_per_trip[['avg_smooth','avg_turning', 'avg_duration']]
+
 
 #search through OLA_COMMENTS to isolate comments which include 'Unsafe Driving'.
 
@@ -91,7 +91,6 @@ predictions = clf_rf.predict(x_val)
 
 from sklearn.metrics import confusion_matrix
 print(confusion_matrix(actual,predictions))
-
 
 from sklearn.metrics import classification_report
 print(classification_report(actual, predictions))
