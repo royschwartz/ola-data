@@ -4,13 +4,11 @@ import pandas as pd
 df = pd.read_csv(r"olaresults.txt", sep='\t', header=(0), low_memory=False)
 
 #create trip duration
-
 df['start'] = pd.to_datetime(df['Start_Date'] + ' ' + df['Start_Time'])
 df['end'] = pd.to_datetime(df['Stop_Date'] + ' ' + df['Stop_Time'])
 df['trip_duration'] = (df.end - df.start) / np.timedelta64(1, 's') / 60
 
 #select only the columns I am going to need:
-
 df = df[['IMEI', 'OLA_COMMENTS', 'trip_duration', 'Smooth_Driving_Score', 'Turning_Score']]
 
 #drop all rows where IMEI is nan - I see we did not record scores for these so they are irrelevant to the project
@@ -40,7 +38,6 @@ df[['avg_smooth','avg_turning', 'avg_duration']]=averages_per_trip[['avg_smooth'
 
 
 #search through OLA_COMMENTS to isolate comments which include 'Unsafe Driving'.
-
 df['unsafe'] = 0
 target_pos = 0
 
@@ -81,11 +78,10 @@ x_train_res, y_train_res = sm.fit_sample(x_train, y_train)
 
 from sklearn.ensemble import RandomForestClassifier
 
-# Create model with 100 trees
+#model
 clf_rf = RandomForestClassifier(n_estimators=100, random_state=12, class_weight='balanced')
 clf_rf.fit(x_train_res, y_train_res)
 
-# Fit on training data
 actual = y_val
 predictions = clf_rf.predict(x_val)
 
